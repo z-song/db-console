@@ -3,6 +3,7 @@
 namespace Dbconsole;
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Database\QueryException;
@@ -71,9 +72,24 @@ class Shell extends Application
 
     public function writeResult($result)
     {
-        //$output = json_encode($result);
+        $output = json_encode($result);
 
-        $this->output->writeln((new ResultFormatter($result))->output());
+        $output = json_decode($output, true);
+
+        if(empty($output)) return;
+
+       $this->table(array_keys(current($output)), $output);
+    }
+
+    public function table(array $headers, $rows, $style = 'default')
+    {
+        $table = new Table($this->output);
+
+        if ($rows instanceof Arrayable) {
+            $rows = $rows->toArray();
+        }
+
+        $table->setHeaders($headers)->setRows($rows)->setStyle($style)->render();
     }
 
     public function writeException(\Exception $e)
@@ -81,7 +97,8 @@ class Shell extends Application
         try{
             throw $e;
         } catch (QueryException $e) {
-            $this->output->writeln("\033[01;31m <ERR> {$e->getMessage()} \033[0m");
+
+            $this->output->writeln("<error>{$e->getMessage()}</error>");
         }
     }
 
