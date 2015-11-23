@@ -1,0 +1,31 @@
+{
+    "name": "encore/dbconsole",
+    "description": "Database Console",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zsong",
+            "email": "zosong@126.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/console": "^2.7",
+        "illuminate/database": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dbconsole\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packagist.phpcomposer.com"
+        },
+        {
+            "packagist": false
+        }
+    ]
+}
