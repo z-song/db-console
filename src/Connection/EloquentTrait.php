@@ -1,6 +1,6 @@
 <?php
 
-namespace Dbconsole\Connection;
+namespace Encore\Dbconsole\Connection;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Str;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dbconsole\Connection;
+namespace Encore\Dbconsole\Connection;
 
 use Predis\Client;
 use Dbconsole\Connection;
@@ -10,6 +10,10 @@ class Redis extends ConnectionAbstract implements ConnectionInterface
 {
     public function __construct($name, $config)
     {
+        if( ! class_exists('Predis\Client')) {
+            throw new \ErrorException("Redis not supported currently, please install 'predis/predis' package.");
+        }
+
         $this->name = $name ?: 'default';
 
         $this->addConnection($config);

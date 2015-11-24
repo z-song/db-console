@@ -1,7 +1,6 @@
 <?php
 
-namespace Dbconsole;
-
+namespace Encore\Dbconsole;
 
 class Loop {
 

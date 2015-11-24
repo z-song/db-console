@@ -1,6 +1,6 @@
 <?php
 
-namespace Dbconsole\Connection;
+namespace Encore\Dbconsole\Connection;
 
 interface ConnectionInterface {
 

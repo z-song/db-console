@@ -1,6 +1,6 @@
 <?php
 
-namespace Dbconsole;
+namespace Encore\Dbconsole;
 
 class Factory {
 
@@ -24,7 +24,7 @@ class Factory {
     {
         $config = static::getInstance()->loadConfig($name);
 
-        $className = "\\Dbconsole\\Connection\\" . ucfirst($config['driver']);
+        $className = "Encore\\Dbconsole\\Connection\\" . ucfirst($config['driver']);
 
         if(class_exists($className)) {
 

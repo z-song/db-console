@@ -1,10 +1,10 @@
 <?php
 
-namespace Dbconsole;
+namespace Encore\Dbconsole;
 
 use ErrorException;
-use Dbconsole\Factory as Connection;
-use Dbconsole\Connection\ConnectionInterface;
+use Encore\Dbconsole\Factory as Connection;
+use Encore\Dbconsole\Connection\ConnectionInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;

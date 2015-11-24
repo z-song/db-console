@@ -1,6 +1,6 @@
 <?php
 
-namespace Dbconsole\Connection;
+namespace Encore\Dbconsole\Connection;
 
 use MongoClient;
 use Dbconsole\Connection;
