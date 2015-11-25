@@ -46,7 +46,7 @@ class DbConsoleCommand extends Command
     protected function getOptions()
     {
         return [
-            ['connection', null, InputOption::VALUE_NONE, 'Specify a connection in laravel database config.'],
+            ['connection', null, InputOption::VALUE_OPTIONAL, 'Specify a connection in laravel database config.'],
         ];
     }
 }

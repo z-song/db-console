@@ -3,14 +3,24 @@
 namespace Encore\Dbconsole;
 
 use ErrorException;
-use Encore\Dbconsole\Factory as Connection;
-use Encore\Dbconsole\Connection\ConnectionInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\Table;
+use Encore\Dbconsole\Factory as Connection;
+use Encore\Dbconsole\Connection\ConnectionInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * The Db Console application.
+ *
+ * Usage:
+ *
+ *     $shell = new Shell();
+ *     $shell->run();
+ *
+ * @author Zou Song <zosong@126.com>
+ */
 class Shell extends Application
 {
     const VERSION       = 'v0.0.1';
@@ -36,6 +46,12 @@ class Shell extends Application
         $this->init($config);
     }
 
+    /**
+     * Initialize the shell.
+     *
+     * @param $config
+     * @throws ErrorException
+     */
     public function init($config)
     {
         error_reporting(-1);
@@ -50,6 +66,12 @@ class Shell extends Application
         $this->loop = new Loop();
     }
 
+    /**
+     * Load config with $config or from default config file.
+     *
+     * @param $config
+     * @throws ErrorException
+     */
     public function loadConfig($config)
     {
         if(is_array($config)) {
@@ -61,11 +83,29 @@ class Shell extends Application
         }
     }
 
+    /**
+     * Runs the current application.
+     *
+     * @param InputInterface  $input  An Input instance
+     * @param OutputInterface $output An Output instance
+     *
+     * @return int 0 if everything went fine, or an error code
+     *
+     * @throws \Exception When doRun returns Exception
+     */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
         return parent::run($input, $output);
     }
 
+    /**
+     * Runs the current application.
+     *
+     * @param InputInterface  $input  An Input instance
+     * @param OutputInterface $output An Output instance
+     *
+     * @return int 0 if everything went fine, or an error code
+     */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->setOutput($output);
@@ -80,6 +120,11 @@ class Shell extends Application
         }
     }
 
+    /**
+     * Get current input from readline
+     *
+     * @throws \Exception
+     */
     public function getInput()
     {
         $this->queryBufferOpen = false;
@@ -96,6 +141,12 @@ class Shell extends Application
         } while(!$this->hasValidQuery());
     }
 
+    /**
+     * Add query to buffer
+     *
+     * @param $query
+     * @throws \Exception
+     */
     public function addQuery($query)
     {
         try {
@@ -113,22 +164,40 @@ class Shell extends Application
         }
     }
 
+    /**
+     * Get current query.
+     *
+     * @return mixed
+     */
     public function getQuery()
     {
         return $this->query;
     }
 
+    /**
+     * Check whether the query in this shell's query buffer is valid.
+     *
+     * @return bool
+     */
     public function hasValidQuery()
     {
         return !$this->queryBufferOpen && $this->query !== false;
     }
 
+    /**
+     * Reset current query buffer.
+     */
     public function resetQueryBuffer()
     {
         $this->query = false;
         $this->queryBuffer = [];
     }
 
+    /**
+     * Render results.
+     *
+     * @param $result
+     */
     public function renderResult($result)
     {
         $this->resetQueryBuffer();
@@ -150,6 +219,13 @@ class Shell extends Application
         }
     }
 
+    /**
+     * Render table.
+     *
+     * @param array $headers
+     * @param $rows
+     * @param string $style
+     */
     public function table(array $headers, $rows, $style = 'default')
     {
         $table = new Table($this->output);
@@ -161,11 +237,21 @@ class Shell extends Application
         $table->setHeaders($headers)->setRows($rows)->setStyle($style)->render();
     }
 
+    /**
+     * Render sting.
+     *
+     * @param $string
+     */
     public function string($string)
     {
         $this->output->writeln($string);
     }
-    
+
+    /**
+     * Render list.
+     *
+     * @param $list
+     */
     public function lists($list)
     {
         $output = '';
@@ -221,7 +307,7 @@ class Shell extends Application
     }
 
     /**
-     * Set outputer
+     * Set the shell outputer
      *
      * @param OutputInterface $output
      */
@@ -242,6 +328,14 @@ class Shell extends Application
         $this->connection = Connection::create();
     }
 
+    /**
+     * Set the database connection, if $connection is a string,
+     *
+     * then create a connection use $connection as connection name.
+     *
+     * @param string $connection
+     * @throws \Exception
+     */
     public function setConnection($connection = 'default')
     {
         if($connection instanceof ConnectionInterface) {
@@ -253,11 +347,26 @@ class Shell extends Application
         }
     }
 
+    /**
+     * Get the database connection.
+     *
+     * @return mixed
+     */
     public function getConnection()
     {
         return $this->connection;
     }
 
+    /**
+     * Handle all errors.
+     *
+     * @param $level
+     * @param $message
+     * @param string $file
+     * @param int $line
+     * @param array $context
+     * @throws ErrorException
+     */
     public function handleError($level, $message, $file = '', $line = 0, $context = [])
     {
         if (error_reporting() & $level) {
@@ -265,6 +374,11 @@ class Shell extends Application
         }
     }
 
+    /**
+     * Handle all exceptions.
+     *
+     * @param $e
+     */
     public function handleException($e)
     {
         $this->renderException($e, $this->output ?: new ConsoleOutput());

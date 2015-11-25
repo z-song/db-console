@@ -8,15 +8,18 @@ class Factory {
 
     private static $config;
 
-    protected $connection;
-
+    /**
+     * Get Factory instance.
+     *
+     * @return Factory
+     */
     public static function getInstance()
     {
         return static::$instance instanceof self ? static::$instance : new self;
     }
 
     /**
-     * @param null $name Connection name
+     * @param string $name Connection name
      * @return mixed
      * @throws \Exception
      */
@@ -34,6 +37,12 @@ class Factory {
         }
     }
 
+    /**
+     * Load configuration from database with connection name.
+     *
+     * @param null $name
+     * @return mixed
+     */
     protected function loadConfig($name = null)
     {
         if( ! is_array(static::$config)) {
@@ -59,6 +68,11 @@ class Factory {
         return $config;
     }
 
+    /**
+     * Set configuration.
+     *
+     * @param array $config
+     */
     public static function setConfig(array $config)
     {
         static::$config = $config;

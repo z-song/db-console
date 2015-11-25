@@ -1,7 +1,9 @@
 {
     "name": "encore/dbconsole",
     "description": "Database Console",
-    "type": "project",
+    "type": "library",
+    "keywords": ["console", "database", "shell", "repl"],
+    "homepage": "https://github.com/z-song/db-console",
     "license": "MIT",
     "authors": [
         {
@@ -15,18 +17,15 @@
         "illuminate/database": "^5.1",
         "predis/predis": "^1.0"
     },
+    "suggest": {
+        "ext-pcntl": "Enabling the PCNTL extension makes Db Console a lot happier :)",
+        "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
+        "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history.",
+        "ext-mongodb": "The mongodb shell need mongodb extension to work."
+    },
     "autoload": {
         "psr-4": {
             "Encore\\Dbconsole\\": "src/"
         }
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packagist.phpcomposer.com"
-        },
-        {
-            "packagist": false
-        }
-    ]
+    }
 }

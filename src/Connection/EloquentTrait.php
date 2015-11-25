@@ -2,8 +2,8 @@
 
 namespace Encore\Dbconsole\Connection;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Str;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 trait EloquentTrait
 {

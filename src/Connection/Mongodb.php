@@ -3,7 +3,7 @@
 namespace Encore\Dbconsole\Connection;
 
 use MongoClient;
-use Dbconsole\Connection;
+use ErrorException;
 use Illuminate\Support\Str;
 
 class Mongodb extends ConnectionAbstract implements ConnectionInterface
@@ -45,6 +45,10 @@ class Mongodb extends ConnectionAbstract implements ConnectionInterface
         }
 
         $result = $this->connection->execute($query);
+
+        if(isset($result['errmsg'])) {
+            throw new ErrorException($result['errmsg']);
+        }
 
         return json_encode($result['retval'], JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
     }

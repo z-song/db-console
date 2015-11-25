@@ -3,7 +3,6 @@
 namespace Encore\Dbconsole\Connection;
 
 use Predis\Client;
-use Dbconsole\Connection;
 use Predis\Response\ResponseInterface;
 
 class Redis extends ConnectionAbstract implements ConnectionInterface
@@ -46,7 +45,7 @@ class Redis extends ConnectionAbstract implements ConnectionInterface
             return $result->__toString();
         }
 
-        if($this->isAssociate($result)) {
+        if(is_array($result) && $this->isAssociate($result)) {
             return [$result];
         }
 

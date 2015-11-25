@@ -7,7 +7,12 @@ class Loop {
     private $shell;
 
     private $savegame;
-    
+
+    /**
+     * Run execution loop in a forked process.
+     *
+     * @param Shell $shell
+     */
     public function run(Shell $shell)
     {
         $this->shell = $shell;
@@ -63,6 +68,9 @@ class Loop {
         exit;
     }
 
+    /**
+     * Do execution loop
+     */
     public function doLoop()
     {
         do{
