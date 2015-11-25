@@ -217,6 +217,8 @@ class Shell extends Application
                 $this->table(array_keys(current($output)), $output);
             }
         }
+
+        $this->string($this->connection->appendResult());
     }
 
     /**

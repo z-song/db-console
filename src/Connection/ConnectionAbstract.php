@@ -25,4 +25,9 @@ abstract class ConnectionAbstract
         return true;
     }
 
+    public function appendResult()
+    {
+
+    }
+
 }

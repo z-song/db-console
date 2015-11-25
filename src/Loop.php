@@ -40,19 +40,9 @@ class Loop {
                 throw new \RuntimeException('Error waiting for execution loop.');
             }
 
-            $content = stream_get_contents($down);
             fclose($down);
 
-            if ($content) {
-            //    $shell->setScopeVariables(@unserialize($content));
-            }
-
             return;
-        }
-
-        // This is the child process. It's going to do all the work.
-        if (function_exists('setproctitle')) {
-            setproctitle('dbconsole (loop)');
         }
 
         // We won't be needing this one.
@@ -61,8 +51,7 @@ class Loop {
         // Let's do some processing.
         $this->doLoop();
 
-        // Send the scope variables back up to the main thread
-        //fwrite($up, $this->serializeReturn($shell->getScopeVariables()));
+        // We won't be needing this one too.
         fclose($up);
 
         exit;
@@ -91,7 +80,7 @@ class Loop {
             $this->shell->addHistory($this->shell->getQuery());
             $this->shell->renderResult($result);
 
-            $this->beforeLoop();
+            $this->afterLoop();
 
         } while (true);
     }

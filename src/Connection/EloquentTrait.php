@@ -9,6 +9,10 @@ trait EloquentTrait
 {
     private $manager;
 
+    private $result;
+
+    private $executionTime = 0;
+
     public function __construct($name, $config)
     {
         $this->name = $name ?: 'default';
@@ -36,22 +40,31 @@ trait EloquentTrait
         $this->connection = $this->manager->connection();
     }
 
-    public function query($query)
+    public function query($sql)
     {
+        if(empty($sql)) return;
 
-        if(empty($query)) return;
+        list($start_m, $start_s) = explode(' ', microtime());
 
-        $result = $this->connection->select(str_replace([';', "\G"], '', $query));
+        $this->result = $this->connection->select(str_replace([';', "\G"], '', $sql));
 
-        if(Str::contains($query, "\G")) {
-            $result = json_encode($result, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+        list($end_m, $end_s) = explode(' ', microtime());
+        $this->executionTime = round($end_s+$end_m-$start_s-$start_m, 2);
+
+        if(Str::contains($sql, "\G")) {
+            $this->result = json_encode($this->result, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
         }
 
-        return $result;
+        return $this->result;
     }
 
     public function queryClosed($query)
     {
         return Str::contains($query, ';');
+    }
+
+    public function appendResult()
+    {
+        return count($this->result) . " row in set ({$this->executionTime} sec)\r\n";
     }
 }
