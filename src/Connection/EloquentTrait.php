@@ -44,12 +44,11 @@ trait EloquentTrait
     {
         if(empty($sql)) return;
 
-        list($start_m, $start_s) = explode(' ', microtime());
+        $start = array_sum(explode(' ', microtime()));
 
         $this->result = $this->connection->select(str_replace([';', "\G"], '', $sql));
 
-        list($end_m, $end_s) = explode(' ', microtime());
-        $this->executionTime = round($end_s+$end_m-$start_s-$start_m, 2);
+        $this->executionTime = number_format(array_sum(explode(' ', microtime()))-$start, 2);
 
         if(Str::contains($sql, "\G")) {
             $this->result = json_encode($this->result, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
