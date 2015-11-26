@@ -6,6 +6,7 @@ use ErrorException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\Table;
 use Encore\Dbconsole\Factory as Connection;
+use Encore\Dbconsole\TabCompletion\AutoCompleter;
 use Encore\Dbconsole\Connection\ConnectionInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -62,6 +63,9 @@ class Shell extends Application
         $this->loadConfig($config);
 
         Factory::setConfig($this->config);
+
+        $this->completion = new AutoCompleter($this);
+        $this->completion->activate();
 
         $this->loop = new Loop();
     }

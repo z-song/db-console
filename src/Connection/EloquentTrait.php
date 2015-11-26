@@ -64,6 +64,6 @@ trait EloquentTrait
 
     public function appendResult()
     {
-        return count($this->result) . " row in set ({$this->executionTime} sec)\r\n";
+        return sprintf("%d row in set (%s sec)\r\n", count($this->result), $this->executionTime);
     }
 }

@@ -50,6 +50,8 @@ class Mongodb extends ConnectionAbstract implements ConnectionInterface
             throw new ErrorException($result['errmsg']);
         }
 
+        if(is_string($result['retval'])) return $result['retval'];
+
         return json_encode($result['retval'], JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
     }
 

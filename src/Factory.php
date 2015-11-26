@@ -23,17 +23,17 @@ class Factory {
      * @return mixed
      * @throws \Exception
      */
-    public static function create($name = 'default')
+    public static function create($name = null)
     {
-        $config = static::getInstance()->loadConfig($name);
+        static::$config = static::getInstance()->loadConfig($name);
 
-        $className = "Encore\\Dbconsole\\Connection\\" . ucfirst($config['driver']);
+        $className = __NAMESPACE__ . "\\Connection\\" . ucfirst(static::$config['driver']);
 
         if(class_exists($className)) {
 
-            return new $className($name, $config);
+            return new $className($name, static::$config);
         } else {
-            throw new \Exception("Driver " . ucfirst($config['driver']) . " not found");
+            throw new \Exception("Driver " . ucfirst(static::$config['driver']) . " not found");
         }
     }
 
@@ -66,6 +66,16 @@ class Factory {
         }
 
         return $config;
+    }
+
+    /**
+     * Get configuration.
+     *
+     * @return mixed
+     */
+    public static function getConfig()
+    {
+        return static::$config;
     }
 
     /**
