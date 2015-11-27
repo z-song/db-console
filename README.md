@@ -6,15 +6,15 @@ DB Console is a database console with support for `Mysql`, `Sqlite`, `Mongodb` a
 ## Screenshots
 Mysql:
 
-![e1135cfc-c117-4ded-a7f3-e8b186dc43a2](https://cloud.githubusercontent.com/assets/1479100/11388570/b1ac411e-9372-11e5-9542-f9b8f3990145.png)
+![ff11be54-5cc8-4790-876b-a4950d00fe32](https://cloud.githubusercontent.com/assets/1479100/11439445/715a479e-9536-11e5-9c40-35fb13160b38.png)
 
 MongoDB:
 
-![fbafd0a2-f44c-4f53-b1fd-c1cc5cc62f26](https://cloud.githubusercontent.com/assets/1479100/11388615/2f7f6aa8-9373-11e5-9fee-77c363517cf6.png)
+![9e0543f3-c44b-44a9-9419-9d55da21c540](https://cloud.githubusercontent.com/assets/1479100/11439473/9b2c102a-9536-11e5-8ae6-c8a09fc54a3f.png)
 
 Redis:
 
-![690620bb-89a4-4656-a765-a963a1ca044c](https://cloud.githubusercontent.com/assets/1479100/11388578/c63e0900-9372-11e5-92a1-ae10a733df04.png)
+![51a07cbe-089e-428b-a1a3-01bc47da4207](https://cloud.githubusercontent.com/assets/1479100/11439470/9838351a-9536-11e5-9344-e4df446575b9.png)
 
 ## Installation
 
@@ -37,7 +37,7 @@ use Encore\Dbconsole\Shell;
 
 $shell = new Shell(__DIR__ . '/config/database.php');
 
-// Also you can specify a connection in your configuration.
+// Also you can specify a connection which in your configuration.
 //$shell->setConnection('redis');
 
 $shell->run();
