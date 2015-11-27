@@ -11,7 +11,7 @@ trait EloquentTrait
 
     private $result;
 
-    private $executionTime = 0;
+    private $log;
 
     public function __construct($name, $config)
     {
@@ -44,11 +44,11 @@ trait EloquentTrait
     {
         if(empty($sql)) return;
 
-        $start = array_sum(explode(' ', microtime()));
+        $this->connection->enableQueryLog();
 
         $this->result = $this->connection->select(str_replace([';', "\G"], '', $sql));
 
-        $this->executionTime = number_format(array_sum(explode(' ', microtime()))-$start, 2);
+        $this->log = current($this->connection->getQueryLog());
 
         if(Str::contains($sql, "\G")) {
             $this->result = json_encode($this->result, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
@@ -64,6 +64,6 @@ trait EloquentTrait
 
     public function appendResult()
     {
-        return sprintf("%d row in set (%s sec)\r\n", count($this->result), $this->executionTime);
+        return sprintf("%d row in set (%s sec)\r\n", count($this->result), number_format($this->log['time'] / 1000, 2));
     }
 }
